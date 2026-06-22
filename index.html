@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPU CGPA Vision Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CGPA Vision Calculator</h1>
+            <p>Upload your marksheet to automatically extract subjects and calculate your minimum possible CGPA.</p>
+        </header>
+        
+        <div class="section upload-section">
+            <input type="file" id="marksheetInput" accept="image/*">
+            <button id="processBtn" class="primary-btn">Extract Data with AI</button>
+            <p id="loadingStatus" class="status-text hidden">Processing image... this may take a few seconds.</p>
+        </div>
+
+        <div class="section calculator-section hidden" id="calculatorSection">
+            <table id="subjectsTable">
+                <thead>
+                    <tr>
+                        <th>Subject Name</th>
+                        <th>Marks (0-100)</th>
+                        <th>Credits</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="subjectsBody">
+                    </tbody>
+            </table>
+            <button id="addRowBtn" class="secondary-btn">+ Add Subject Manually</button>
+        </div>
+
+        <div class="section results-section">
+            <h2>Calculation Summary</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span>Total Credits</span>
+                    <strong id="totalCredits">0</strong>
+                </div>
+                <div class="stat-box">
+                    <span>Total Grade Points</span>
+                    <strong id="totalPoints">0</strong>
+                </div>
+                <div class="stat-box highlight">
+                    <span>Minimum CGPA</span>
+                    <strong id="finalCgpa">0.00</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
