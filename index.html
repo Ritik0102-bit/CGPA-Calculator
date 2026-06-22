@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LPU CGPA Vision Calculator</title>
+    <title>LPU CGPA Calc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="background-gradient"></div>
+    <div class="container glass-panel">
         <header>
-            <h1>CGPA Vision Calculator</h1>
+            <h1>CGPA Calc</h1>
             <p>Upload your marksheet to automatically extract subjects and calculate your minimum possible CGPA.</p>
         </header>
         
         <div class="section upload-section">
             <input type="file" id="marksheetInput" accept="image/*">
-            <button id="processBtn" class="primary-btn">Extract Data with AI</button>
+            <div class="action-buttons">
+                <button id="processBtn" class="primary-btn">Extract Data with AI</button>
+                <button id="manualStartBtn" class="secondary-btn" style="margin-top: 0;">Or Add Manually</button>
+            </div>
             <p id="loadingStatus" class="status-text hidden">Processing image... this may take a few seconds.</p>
         </div>
 
@@ -24,9 +31,10 @@
                 <thead>
                     <tr>
                         <th>Subject Name</th>
-                        <th>Marks (0-100)</th>
-                        <th>Credits</th>
-                        <th>Action</th>
+                        <th style="width: 120px;">Marks (0-100)</th>
+                        <th style="width: 100px;">Credits</th>
+                        <th style="width: 80px; text-align: center;">Grade</th>
+                        <th style="width: 60px; text-align: center;">Action</th>
                     </tr>
                 </thead>
                 <tbody id="subjectsBody">
@@ -51,8 +59,50 @@
                     <strong id="finalCgpa">0.00</strong>
                 </div>
             </div>
+            <div class="info-note">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <p><strong>Note:</strong> This is the minimum CGPA calculated based on standard LPU tables. Your actual CGPA is most likely to increase due to <strong>Relative Grading</strong>. Passing criteria is 40 Marks.</p>
+            </div>
+        </div>
+
+        <div class="section reference-section">
+            <div class="reference-header">
+                <span class="ref-badge">REFERENCE</span>
+                <h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Grade Point Table</h2>
+            </div>
+            <table class="ref-table">
+                <thead>
+                    <tr>
+                        <th>Marks Range</th>
+                        <th>Grade</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>90 - 100</td><td>O</td><td>10</td></tr>
+                    <tr><td>80 - 89</td><td>A+</td><td>9</td></tr>
+                    <tr><td>70 - 79</td><td>A</td><td>8</td></tr>
+                    <tr><td>60 - 69</td><td>B+</td><td>7</td></tr>
+                    <tr><td>50 - 59</td><td>B</td><td>6</td></tr>
+                    <tr><td>45 - 49</td><td>C</td><td>5</td></tr>
+                    <tr><td>40 - 44</td><td>D</td><td>4</td></tr>
+                    <tr><td>Below 40</td><td>F</td><td>0</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
+
+    <footer>
+        <p>Made by <strong>Ritik</strong></p>
+        <div class="social-links">
+            <a href="#" target="_blank" aria-label="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="#" target="_blank" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

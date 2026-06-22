@@ -7,6 +7,7 @@ const API_URL = "https://api.groq.com/openai/v1/chat/completions";
 // --- DOM Elements ---
 const marksheetInput = document.getElementById('marksheetInput');
 const processBtn = document.getElementById('processBtn');
+const manualStartBtn = document.getElementById('manualStartBtn');
 const loadingStatus = document.getElementById('loadingStatus');
 const calculatorSection = document.getElementById('calculatorSection');
 const subjectsBody = document.getElementById('subjectsBody');
@@ -14,6 +15,12 @@ const addRowBtn = document.getElementById('addRowBtn');
 
 // --- Event Listeners ---
 processBtn.addEventListener('click', handleImageUpload);
+manualStartBtn.addEventListener('click', () => {
+    calculatorSection.classList.remove('hidden');
+    if (subjectsBody.children.length === 0) {
+        addSubjectRow("", "", "");
+    }
+});
 addRowBtn.addEventListener('click', () => addSubjectRow("", "", ""));
 subjectsBody.addEventListener('input', calculateCGPA);
 
@@ -146,9 +153,25 @@ function addSubjectRow(subject, marks, credits) {
         <td><input type="text" class="subject-input" value="${subject}" placeholder="e.g., Data Structures"></td>
         <td><input type="number" class="marks-input" value="${marks}" min="0" max="100" placeholder="Marks"></td>
         <td><input type="number" class="credits-input" value="${credits}" min="1" placeholder="Credits"></td>
-        <td><button class="delete-btn" onclick="this.closest('tr').remove(); calculateCGPA();">✕</button></td>
+        <td style="text-align: center;"><div class="grade-badge">-</div></td>
+        <td style="text-align: center;"><button class="delete-icon-btn" onclick="this.closest('tr').remove(); calculateCGPA();" title="Delete Subject">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+        </button></td>
     `;
     subjectsBody.appendChild(tr);
+}
+
+function getGradeStr(marks) {
+    const m = parseFloat(marks);
+    if (isNaN(m)) return '-';
+    if (m >= 90) return 'O';
+    if (m >= 80) return 'A+';
+    if (m >= 70) return 'A';
+    if (m >= 60) return 'B+';
+    if (m >= 50) return 'B';
+    if (m >= 45) return 'C';
+    if (m >= 40) return 'D';
+    return 'F';
 }
 
 function getPointer(marks) {
@@ -159,7 +182,8 @@ function getPointer(marks) {
     if (m >= 70) return 8;
     if (m >= 60) return 7;
     if (m >= 50) return 6;
-    if (m >= 40) return 5;
+    if (m >= 45) return 5;
+    if (m >= 40) return 4;
     return 0; // Fail
 }
 
@@ -174,6 +198,17 @@ function calculateCGPA() {
         const credits = parseFloat(creditsInput) || 0;
         
         const pointer = getPointer(marks);
+        const gradeStr = getGradeStr(marks);
+        
+        const gradeBadge = row.querySelector('.grade-badge');
+        if (gradeBadge) {
+            gradeBadge.innerText = gradeStr;
+            // Optionally remove any old grade classes
+            gradeBadge.className = 'grade-badge'; 
+            if (gradeStr !== '-') {
+                gradeBadge.classList.add(`grade-${gradeStr.replace('+','-plus').toLowerCase()}`);
+            }
+        }
         
         totalPoints += (pointer * credits);
         totalCredits += credits;
